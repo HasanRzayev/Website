@@ -1,0 +1,147 @@
+﻿@using Website.Models.Entity
+@{
+    Layout = null;
+    int a = 1;
+}
+
+
+@model Product
+
+<partial name="~/Views/Admin/PartialMenu.cshtml" model=ViewBag.Images />
+
+<div style="text-align:center;">
+    <h1 >Products</h1>
+
+<table class="zigzag" >
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+
+    </tr>
+        @foreach (var product in ViewData["allproduce"] as IEnumerable<Website.Models.ViewModels.ProduceViewModel>)
+        {
+                                       <tr>
+                                           <td text-align="center">@a</td>
+                                           <td text-align="center">@product.Name</td>
+                                               <td text-align="center">@product.Catalogue_Name</td>
+                @{
+                    a++;
+                }
+                                       </tr> 
+        }
+</table>
+
+<input  style="width: 820px" type="button" value="Menu" onclick="location.href='@Url.Action("Menu")'" />
+
+
+</div>
+<div class="box">
+    <a class="button" href="#popup1">Add Produce</a>
+</div>
+
+<div id="popup1" class="overlay">
+    <div class="popup">
+        <h2>Add Produce</h2>
+        <a class="close" href="#">&times;</a>
+        <div class="content">
+            <form asp-action="AddProduct" asp-controller="Home" method="post">
+         <input style="width: 200px" type="text" asp-for="Name" placeholder="Product Name" />
+          <select asp-for="catalogue_id" asp-items=@(ViewData["marks"] as IEnumerable<SelectListItem>)></select> <br />
+         <input style="width: 200px"  type="text" asp-for="price" placeholder="Product Price" />
+         <input  style="width: 200px" value="ADD" type="submit" />
+
+    </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    body {
+  
+  background-size: cover;
+
+}
+
+h1 {
+  text-align: center;
+  font-family: Tahoma, Arial, sans-serif;
+  color: #06D85F;
+  margin: 80px 0;
+}
+
+.box {
+  
+  
+ 
+  padding: 135px;
+  border: 2px solid #fff;
+  border-radius: 20px/50px;
+ 
+  text-align: center;
+}
+
+.button {
+  font-size: 1em;
+  padding: 10px;
+  color: #fff;
+  border: 2px solid #06D85F;
+  border-radius: 20px/50px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease-out;
+}
+   .button:hover {
+  background: #06D85F;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  transition: opacity 500ms;
+  visibility: hidden;
+  opacity: 0;
+}
+.overlay:target {
+  visibility: visible;
+  opacity: 1;
+}
+
+.popup {
+  margin: 70px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 5px;
+  width: 30%;
+  position: relative;
+  transition: all 5s ease-in-out;
+}
+
+.popup h2 {
+  margin-top: 0;
+  color: #333;
+  font-family: Tahoma, Arial, sans-serif;
+}
+.popup .close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  transition: all 200ms;
+  font-size: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #333;
+}
+.popup .close:hover {
+  color: #06D85F;
+}
+.popup .content {
+  max-height: 30%;
+  overflow: auto;
+}
+
+    
+</style>
