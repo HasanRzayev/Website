@@ -29,6 +29,9 @@ namespace Website.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Image_url")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -52,10 +55,6 @@ namespace Website.Migrations
 
                     b.Property<int>("catalogue_id")
                         .HasColumnType("int");
-
-                    b.Property<string>("image_url")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("price")
                         .HasColumnType("int");

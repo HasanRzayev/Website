@@ -1,4 +1,6 @@
 ﻿@using Website.Models.Entity
+@using Website.Models.ViewModels
+@*@using Website.Models.Entity
 @{
     Layout = null;
     int a = 1;
@@ -55,93 +57,144 @@
     </div>
 </div>
 
-<style>
-    body {
-  
-  background-size: cover;
-
+*@
+@{
+    Layout = null;
 }
 
-h1 {
-  text-align: center;
-  font-family: Tahoma, Arial, sans-serif;
-  color: #06D85F;
-  margin: 80px 0;
-}
+@model List<Product>
 
-.box {
-  
-  
- 
-  padding: 135px;
-  border: 2px solid #fff;
-  border-radius: 20px/50px;
- 
-  text-align: center;
-}
 
-.button {
-  font-size: 1em;
-  padding: 10px;
-  color: #fff;
-  border: 2px solid #06D85F;
-  border-radius: 20px/50px;
-  text-decoration: none;
-  cursor: pointer;
-  transition: all 0.3s ease-out;
-}
-   .button:hover {
-  background: #06D85F;
-}
+  <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Corona Admin</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="../../css/assets/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="../../css/assets/vendors/css/vendor.bundle.base.css">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <link rel="stylesheet" href="../../css/assets/vendors/select2/select2.min.css">
+    <link rel="stylesheet" href="../../css/assets/vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <!-- endinject -->
+    <!-- Layout styles -->
+    <link rel="stylesheet" href="../../css/assets/css/style.css">
+    <!-- End layout styles -->
+    <link rel="shortcut icon" href="../../css/assets/images/favicon.png" />
+  </head>
+  <body>
+    <div class="container-scroller">
 
-.overlay {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: rgba(0, 0, 0, 0.7);
-  transition: opacity 500ms;
-  visibility: hidden;
-  opacity: 0;
-}
-.overlay:target {
-  visibility: visible;
-  opacity: 1;
-}
+      <partial name="~/Views/Admin/_navbarpartial.cshtml" model=ViewBag.Images />
+      <div class="container-fluid page-body-wrapper">
+        <partial name="~/Views/Admin/_sidebarpartial.cshtml" model=ViewBag.Images />
+        <div class="main-panel">
+          <div class="content-wrapper">
+            <div class="page-header">
+              <h3 class="page-title"> Add Catagory </h3>
+              <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="#">Forms</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Form elements</li>
+                </ol>
+              </nav>
+            </div>
+            <div class="row">
+              <div class="col-md-6 grid-margin stretch-card">
 
-.popup {
-  margin: 70px auto;
-  padding: 20px;
-  background: #fff;
-  border-radius: 5px;
-  width: 30%;
-  position: relative;
-  transition: all 5s ease-in-out;
-}
+              </div>
+              <div class="col-md-6 grid-margin stretch-card">
 
-.popup h2 {
-  margin-top: 0;
-  color: #333;
-  font-family: Tahoma, Arial, sans-serif;
-}
-.popup .close {
-  position: absolute;
-  top: 20px;
-  right: 30px;
-  transition: all 200ms;
-  font-size: 30px;
-  font-weight: bold;
-  text-decoration: none;
-  color: #333;
-}
-.popup .close:hover {
-  color: #06D85F;
-}
-.popup .content {
-  max-height: 30%;
-  overflow: auto;
-}
+              </div>
+              <div class="col-lg-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Striped Table</h4>
 
-    
-</style>
+                    </p>
+                    <button type="button" onclick="location.href='@Url.Action("AddProduct")'" class="btn btn-inverse-warning btn-fw">Add Product</button>
+                    <br />
+                    <br />
+                    <br />
+                    <div class="table-responsive">
+
+                        <table class="table table-striped" >
+                            <tr>
+                               
+                                <th>Name</th>
+                                <th>Catalogue name</th>
+                                <th>Price</th>
+                                <th>Action</th>
+                                <th>Action</th>
+
+                            </tr>
+                                            @foreach (var product in Model)
+                                            {
+                                               <tr>
+                                                      
+                                                           <td text-align="center"  >@product.Name</td>
+                                                                     <td text-align="center"  >@product.Catalogue?.Name</td>
+                                                                     <td text-align="center"  >@product.price</td>
+                                                       <td>
+
+                                                               <button type="button" class="btn btn-outline-secondary btn-icon-text"> 
+                                                            @Html.ActionLink( "Edit" , "UpdateProduct" , "Admin" , new {  Id = product.Id })  
+                                                                   <i class="mdi mdi-file-check btn-icon-append"></i>
+                                                        
+                                                               </button>
+                                                       </td>
+                                                       <td>  
+
+                                                         <button type="button" class="btn btn-inverse-danger btn-fw">
+
+                                                            @Html.ActionLink( "Delete","DeleteProduct","Admin" ,new {  Id = product.Id })  
+                                                         </button>
+
+
+
+                                                        </td>
+                                               </tr> 
+                                            }
+</table>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+         <partial name="~/Views/Admin/_footerpartial.cshtml" model=ViewBag.Images />
+          <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+    <!-- plugins:js -->
+    <script src="../../css/assets/vendors/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <script src="../../css/assets/vendors/select2/select2.min.js"></script>
+    <script src="../../css/assets/vendors/typeahead.js/typeahead.bundle.min.js"></script>
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="../../css/assets/js/off-canvas.js"></script>
+    <script src="../../css/assets/js/hoverable-collapse.js"></script>
+    <script src="../../css/assets/js/misc.js"></script>
+    <script src="../../css/assets/js/settings.js"></script>
+    <script src="../../css/assets/js/todolist.js"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page -->
+    <script src="../../css/assets/js/file-upload.js"></script>
+    <script src="../../css/assets/js/typeahead.js"></script>
+    <script src="../../css/assets/js/select2.js"></script>
+    <!-- End custom js for this page -->
+  </body>
+</html>

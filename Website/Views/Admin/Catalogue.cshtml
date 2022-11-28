@@ -1,49 +1,194 @@
 ﻿@using Website.Models.Entity
+@using Website.Models.ViewModels
+@*@using Website.Models.Entity
 @{
     Layout = null;
+    int a = 1;
 }
 
 
 @model Product
 
 <partial name="~/Views/Admin/PartialMenu.cshtml" model=ViewBag.Images />
-@*
 
 <div style="text-align:center;">
-      <h1 >Add</h1>
-    <form asp-action="AddProduct" asp-controller="Admin" method="post">
-         <input style="width: 200px" type="text" asp-for="Name" placeholder="Product Name" />
+    <h1 >Products</h1>
 
-         <input  style="width: 200px" value="ADD" type="submit" />
+<table class="zigzag" >
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
 
-    </form>
+    </tr>
+        @foreach (var product in ViewData["allproduce"] as IEnumerable<Website.Models.ViewModels.ProduceViewModel>)
+        {
+                                       <tr>
+                                           <td text-align="center">@a</td>
+                                           <td text-align="center">@product.Name</td>
+                                               <td text-align="center">@product.Catalogue_Name</td>
+                @{
+                    a++;
+                }
+                                       </tr> 
+        }
+</table>
+
+<input  style="width: 820px" type="button" value="Menu" onclick="location.href='@Url.Action("Menu")'" />
 
 
 </div>
+<div class="box">
+    <a class="button" href="#popup1">Add Produce</a>
+</div>
 
-<style>
-    body{
-    background:#023047;
-}
-   input[type=button]{
-        background:orange;
-        padding:20px;
-        margin-top:40px;
-    }
-    input[type=text],input[type=submit]{
-        background:#457b9d;
-        padding:20px;
-        margin-top:40px;
-        color: black;
-    }
-    ::placeholder {
-  color: black;
-  opacity: 1; 
+<div id="popup1" class="overlay">
+    <div class="popup">
+        <h2>Add Produce</h2>
+        <a class="close" href="#">&times;</a>
+        <div class="content">
+            <form asp-action="AddProduct" asp-controller="Home" method="post">
+         <input style="width: 200px" type="text" asp-for="Name" placeholder="Product Name" />
+          <select asp-for="catalogue_id" asp-items=@(ViewData["marks"] as IEnumerable<SelectListItem>)></select> <br />
+         <input style="width: 200px"  type="text" asp-for="price" placeholder="Product Price" />
+         <input  style="width: 200px" value="ADD" type="submit" />
 
+    </form>
+        </div>
+    </div>
+</div>
+
+*@
+@{
+    Layout = null;
 }
- h1{
-        color:orange;
-        padding-top:150px;
-        font-family: Arial, Helvetica, sans-serif;
-    }
-</style>*@
+
+@model List<Catalogue>
+
+
+  <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Corona Admin</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="../../css/assets/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="../../css/assets/vendors/css/vendor.bundle.base.css">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <link rel="stylesheet" href="../../css/assets/vendors/select2/select2.min.css">
+    <link rel="stylesheet" href="../../css/assets/vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <!-- endinject -->
+    <!-- Layout styles -->
+    <link rel="stylesheet" href="../../css/assets/css/style.css">
+    <!-- End layout styles -->
+    <link rel="shortcut icon" href="../../css/assets/images/favicon.png" />
+  </head>
+  <body>
+    <div class="container-scroller">
+  
+      <partial name="~/Views/Admin/_navbarpartial.cshtml" model=ViewBag.Images />
+      <div class="container-fluid page-body-wrapper">
+        <partial name="~/Views/Admin/_sidebarpartial.cshtml" model=ViewBag.Images />
+        <div class="main-panel">
+          <div class="content-wrapper">
+            <div class="page-header">
+              <h3 class="page-title"> Add Catagory </h3>
+              <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="#">Forms</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Form elements</li>
+                </ol>
+              </nav>
+            </div>
+            <div class="row">
+              <div class="col-md-6 grid-margin stretch-card">
+
+              </div>
+              <div class="col-md-6 grid-margin stretch-card">
+
+              </div>
+              <div class="col-lg-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Striped Table</h4>
+                    
+                    </p>
+                    <button type="button" onclick="location.href='@Url.Action("AddCatalogue")'" class="btn btn-inverse-warning btn-fw">Add Catalogue</button>
+                    <br />
+                    <br />
+                    <br />
+                    <div class="table-responsive">
+                        <table class="table table-striped" >
+                            <tr>
+                                <th>Name</th>
+                                <th>Action</th>
+                                <th>Action</th>
+                           
+                            </tr>
+                                            @foreach (var catalogue in Model )
+                                            {
+                                           <tr>
+                                                  
+                                                   <td text-align="center"  >@catalogue.Name</td>
+                                                   <td>
+                                                           
+                                                           <button type="button" class="btn btn-outline-secondary btn-icon-text"> 
+                                                            @Html.ActionLink( "Edit" , "UpdateCatalogue" , "Admin" , new {  Id = catalogue.Id })  
+                                                            <i class="mdi mdi-file-check btn-icon-append"></i>
+                                                           
+                                                           </button>
+                                                   </td>
+                                                   <td>  
+
+                                                     <button type="button" class="btn btn-inverse-danger btn-fw">
+
+                                                            @Html.ActionLink( "Delete","Delete","Admin" ,new {  Id = catalogue.Id })  
+                                                     </button>
+                                                      
+                                                        
+                                                    
+                                                    </td>
+                                           </tr> 
+                                            }
+</table>
+                   
+                    </div>
+                  </div>
+                </div>
+              </div>
+         
+
+
+         <partial name="~/Views/Admin/_footerpartial.cshtml" model=ViewBag.Images />
+          <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+    <!-- plugins:js -->
+    <script src="../../css/assets/vendors/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <script src="../../css/assets/vendors/select2/select2.min.js"></script>
+    <script src="../../css/assets/vendors/typeahead.js/typeahead.bundle.min.js"></script>
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="../../css/assets/js/off-canvas.js"></script>
+    <script src="../../css/assets/js/hoverable-collapse.js"></script>
+    <script src="../../css/assets/js/misc.js"></script>
+    <script src="../../css/assets/js/settings.js"></script>
+    <script src="../../css/assets/js/todolist.js"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page -->
+    <script src="../../css/assets/js/file-upload.js"></script>
+    <script src="../../css/assets/js/typeahead.js"></script>
+    <script src="../../css/assets/js/select2.js"></script>
+    <!-- End custom js for this page -->
+  </body>
+</html>
